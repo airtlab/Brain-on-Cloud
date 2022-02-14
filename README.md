@@ -1,2 +1,2 @@
-# Brain-on-Cloud for Alzheimer's Disease Diagnosis from 3D Structural Magnetic Resonance Full-Brain Scans
+# Brain-on-Cloud for Alzheimer's disease diagnosis from 3D structural magnetic resonance whole-brain scans
 In this repository, the sample IDs and the entire implementation code of Brain-on-Cloud will be uploaded after (and in case of) paper acceptance. The manuscript, submitted on ..., is currently under consideration for publication in ....
