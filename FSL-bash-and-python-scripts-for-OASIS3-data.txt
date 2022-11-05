@@ -1,0 +1,187 @@
+''''''''' OASIS-3 '''''''''
+
+'''AVG TEMPLATE FOR AD (OASIS-3)'''
+
+sele@sele-GK5CP7Y:~$ cd /home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/AD
+
+sele@sele-GK5CP7Y:~/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/AD$ fslmerge -t AD_all (list of all AD sample names without extension .nii.gz)
+
+sele@sele-GK5CP7Y:~/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/AD$ fslmaths AD_all -Tmean AD_avg
+
+'''AVG TEMPLATE FOR CN (OASIS-3)'''
+
+sele@sele-GK5CP7Y:~$ cd /home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/CN
+
+sele@sele-GK5CP7Y:~/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/CN$ fslmerge -t CN_all (list of all CN sample names without extension .nii.gz)
+
+sele@sele-GK5CP7Y:~/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/CN$ fslmaths CN_all -Tmean CN_avg
+
+'''AVG TEMPLATE FOR OASIS-3 (AD+CN)'''
+
+sele@sele-GK5CP7Y:~$ cd /home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/OASIS-3-avgtemp
+
+sele@sele-GK5CP7Y:~/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/OASIS-3-avgtemp$ fslmerge -t OASIS-3_all AD_all CN_all
+
+ele@sele-GK5CP7Y:~/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/OASIS-3-avgtemp$ fslmaths OASIS-3_all -Tmean OASIS-3_avg
+
+'''LINEAR REGISTRATION FOR AD TO AD AVERAGE TEMPLATE (AD_avg.nii.gz)'''
+
+fslpython
+import os
+from fsl.wrappers import flirt
+path = '/home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/AD'
+ref = '/home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/OASIS-3-avgtemp/AD_avg.nii.gz'
+for input in os.listdir(path):
+    output = os.path.join(path,input.replace('.nii.gz',''))+'_LREG.nii.gz'
+    flirt(ref=ref, src=os.path.join(path,input), out=output)
+
+import shutil
+source_dir = '/home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/AD'
+target_dir = '/home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/AD-LREG-ADavgtemp'
+file_names = os.listdir(source_dir)
+for file_name in file_names:
+    if (file_name.endswith('LREG.nii.gz')):
+        shutil.move(os.path.join(source_dir, file_name), target_dir)
+
+'''LINEAR REGISTRATION FOR CN TO CN AVERAGE TEMPLATE (CN_avg.nii.gz)'''
+
+fslpython
+import os
+from fsl.wrappers import flirt
+path = '/home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/CN'
+ref = '/home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/OASIS-3-avgtemp/CN_avg.nii.gz'
+for input in os.listdir(path):
+    output = os.path.join(path,input.replace('.nii.gz',''))+'_LREG.nii.gz'
+    flirt(ref=ref, src=os.path.join(path,input), out=output)
+
+import shutil
+source_dir = '/home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/CN'
+target_dir = '/home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/CN-LREG-CNavgtemp'
+file_names = os.listdir(source_dir)
+for file_name in file_names:
+    if (file_name.endswith('LREG.nii.gz')):
+        shutil.move(os.path.join(source_dir, file_name), target_dir)
+               
+'''LINEAR REGISTRATION FOR AD TO OASIS-3 AVERAGE TEMPLATE (OASIS-3_avg.nii.gz)'''
+
+fslpython
+import os
+from fsl.wrappers import flirt
+path = '/home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/AD'
+ref = '/home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/OASIS-3-avgtemp/OASIS-3_avg.nii.gz'
+for input in os.listdir(path):
+    output = os.path.join(path,input.replace('.nii.gz',''))+'_LREG.nii.gz'
+    flirt(ref=ref, src=os.path.join(path,input), out=output)
+
+import shutil
+source_dir = '/home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/AD'
+target_dir = '/home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/AD-LREG-OASIS-3avgtemp'
+file_names = os.listdir(source_dir)
+for file_name in file_names:
+    if (file_name.endswith('LREG.nii.gz')):
+        shutil.move(os.path.join(source_dir, file_name), target_dir)
+               
+'''LINEAR REGISTRATION FOR CN TO OASIS-3 AVERAGE TEMPLATE (OASIS-3_avg.nii.gz)'''
+
+fslpython
+import os
+from fsl.wrappers import flirt
+path = '/home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/CN'
+ref = '/home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/OASIS-3-avgtemp/OASIS-3_avg.nii.gz'
+for input in os.listdir(path):
+    output = os.path.join(path,input.replace('.nii.gz',''))+'_LREG.nii.gz'
+    flirt(ref=ref, src=os.path.join(path,input), out=output)
+
+import shutil
+source_dir = '/home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/CN'
+target_dir = '/home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/CN-LREG-OASIS-3avgtemp'
+file_names = os.listdir(source_dir)
+for file_name in file_names:
+    if (file_name.endswith('LREG.nii.gz')):
+        shutil.move(os.path.join(source_dir, file_name), target_dir) 
+       
+''' BRAINS AND MASKS FOR AD-LREG-ADavgtemp SAMPLES AT BET 0.3 THRESHOLD '''
+
+fslpython
+import os
+from fsl.wrappers import bet
+path = '/home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/AD-LREG-ADavgtemp'
+for input in os.listdir(path):
+    output = os.path.join(path,input.replace('.nii.gz',''))+'_brain.nii.gz'
+    bet(os.path.join(path,input),output,mask=True,robust=True,fracintensity=0.3)
+    
+import shutil
+source_dir = '/home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/AD-LREG-ADavgtemp'
+target_dir = '/home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/AD-LREG-ADavgtemp-BET'
+file_names = os.listdir(source_dir)
+for file_name in file_names:
+    if (file_name.endswith('brain.nii.gz')):
+        shutil.move(os.path.join(source_dir, file_name), target_dir)
+
+source_dir = '/home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/AD-LREG-ADavgtemp'
+target_dir = '/home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/AD-LREG-ADavgtemp-BRAIN-MASK'
+file_names = os.listdir(source_dir)
+for file_name in file_names:
+    if (file_name.endswith('brain_mask.nii.gz')):
+        shutil.move(os.path.join(source_dir, file_name), target_dir)
+                
+''' BRAINS AND MASKS FOR CN-LREG-CNavgtemp SAMPLES AT BET 0.3 THRESHOLD '''
+
+fslpython
+import os
+from fsl.wrappers import bet
+path = '/home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/CN-LREG-CNavgtemp'
+for input in os.listdir(path):
+    output = os.path.join(path,input.replace('.nii.gz',''))+'_brain.nii.gz'
+    bet(os.path.join(path,input),output,mask=True,robust=True,fracintensity=0.3)
+    
+import shutil
+source_dir = '/home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/CN-LREG-CNavgtemp'
+target_dir = '/home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/CN-LREG-CNavgtemp-BET'
+file_names = os.listdir(source_dir)
+for file_name in file_names:
+    if (file_name.endswith('brain.nii.gz')):
+        shutil.move(os.path.join(source_dir, file_name), target_dir)
+
+source_dir = '/home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/CN-LREG-CNavgtemp'
+target_dir = '/home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/CN-LREG-CNavgtemp-BRAIN-MASK'
+file_names = os.listdir(source_dir)
+for file_name in file_names:
+    if (file_name.endswith('brain_mask.nii.gz')):
+        shutil.move(os.path.join(source_dir, file_name), target_dir)
+    
+''' BRAINS FOR AD-LREG-OASIS-3avgtemp SAMPLES AT BET 0.3 THRESHOLD '''
+
+fslpython
+import os
+from fsl.wrappers import bet
+path = '/home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/AD-LREG-OASIS-3avgtemp'
+for input in os.listdir(path):
+    output = os.path.join(path,input.replace('.nii.gz',''))+'_brain.nii.gz'
+    bet(os.path.join(path,input),output,mask=False,robust=True,fracintensity=0.3)
+    
+import shutil
+source_dir = '/home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/AD-LREG-OASIS-3avgtemp'
+target_dir = '/home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/AD-LREG-OASIS-3avgtemp-BET'
+file_names = os.listdir(source_dir)
+for file_name in file_names:
+    if (file_name.endswith('brain.nii.gz')):
+        shutil.move(os.path.join(source_dir, file_name), target_dir)
+
+''' BRAINS FOR CN-LREG-OASIS-3avgtemp SAMPLES AT BET 0.3 THRESHOLD '''        
+
+fslpython
+import os
+from fsl.wrappers import bet
+path = '/home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/CN-LREG-OASIS-3avgtemp'
+for input in os.listdir(path):
+    output = os.path.join(path,input.replace('.nii.gz',''))+'_brain.nii.gz'
+    bet(os.path.join(path,input),output,mask=False,robust=True,fracintensity=0.3)
+    
+import shutil
+source_dir = '/home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/CN-LREG-OASIS-3avgtemp'
+target_dir = '/home/sele/Scaricati/BRAIN-DISORDERS/OASIS/OASIS-3/CN-LREG-OASIS-3avgtemp-BET'
+file_names = os.listdir(source_dir)
+for file_name in file_names:
+    if (file_name.endswith('brain.nii.gz')):
+        shutil.move(os.path.join(source_dir, file_name), target_dir)
